@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist: Los 6 Pilares GTM | Deepbound</title>
+<style>
+  :root {
+    --teal: #77bcbc;
+    --teal-dark: #2C5D5C;
+    --teal-bg: rgba(119, 188, 188, 0.08);
+    --teal-border: rgba(119, 188, 188, 0.25);
+    --red: #DC4A4A;
+    --amber: #E5A100;
+    --green: #2D9B6E;
+    --bg: #0a1a1a;
+    --surface: #111f1f;
+    --surface-2: #162828;
+    --text: #e8f0f0;
+    --text-muted: #8faaaa;
+    --text-dim: #5a7a7a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--teal-border);
+  }
+
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text), var(--teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header .subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .hero-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+    padding: 20px 32px;
+    background: var(--surface);
+    border: 1px solid var(--teal-border);
+    border-radius: 12px;
+  }
+
+  .hero-stat .number {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--teal);
+  }
+
+  .hero-stat .label {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  /* Intro */
+  .intro {
+    background: var(--surface);
+    border-left: 4px solid var(--teal);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 40px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .intro strong { color: var(--text); }
+
+  /* Score bar */
+  .score-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--teal-border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    backdrop-filter: blur(12px);
+  }
+
+  .score-bar .label { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+
+  .score-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .score-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red), var(--amber), var(--green));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  .score-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--teal);
+    min-width: 50px;
+    text-align: right;
+  }
+
+  /* Pilar card */
+  .pilar {
+    background: var(--surface);
+    border: 1px solid var(--teal-border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .pilar:hover { border-color: var(--teal); }
+
+  .pilar-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .pilar-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .pilar-title-block { flex: 1; }
+
+  .pilar-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .pilar-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .pilar-status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  .pilar-status-indicator.red { background: var(--red); }
+  .pilar-status-indicator.amber { background: var(--amber); }
+  .pilar-status-indicator.green { background: var(--green); }
+
+  .chevron {
+    color: var(--text-dim);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .pilar.open .chevron { transform: rotate(180deg); }
+
+  .pilar-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .pilar.open .pilar-body { max-height: 1200px; }
+
+  .pilar-content { padding: 0 24px 24px; }
+
+  /* Checks */
+  .checks { margin-bottom: 20px; }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(119, 188, 188, 0.08);
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--text-dim);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+    font-size: 13px;
+    color: transparent;
+    user-select: none;
+  }
+
+  .check-box:hover { border-color: var(--teal); }
+  .check-box.checked {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .check-label {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .check-item.checked .check-label {
+    color: var(--text-dim);
+    text-decoration: line-through;
+  }
+
+  /* Alert box */
+  .alert {
+    background: rgba(220, 74, 74, 0.08);
+    border-left: 3px solid var(--red);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 20px;
+  }
+
+  .alert-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .alert p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* What we did */
+  .what-we-did {
+    background: var(--teal-bg);
+    border-left: 3px solid var(--teal);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 20px;
+  }
+
+  .what-we-did-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .what-we-did p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Status selector */
+  .status-selector {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .status-btn {
+    flex: 1;
+    padding: 10px 8px;
+    border: 2px solid var(--surface-2);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .status-btn:hover { border-color: var(--text-dim); }
+  .status-btn.active-red { border-color: var(--red); color: var(--red); background: rgba(220, 74, 74, 0.1); }
+  .status-btn.active-amber { border-color: var(--amber); color: var(--amber); background: rgba(229, 161, 0, 0.1); }
+  .status-btn.active-green { border-color: var(--green); color: var(--green); background: rgba(45, 155, 110, 0.1); }
+
+  /* Diagnostic */
+  .diagnostic {
+    background: var(--surface);
+    border: 2px solid var(--teal-border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    margin-top: 48px;
+    text-align: center;
+  }
+
+  .diagnostic h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .diagnostic-score {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .diagnostic-score.score-bad { color: var(--red); }
+  .diagnostic-score.score-mid { color: var(--amber); }
+  .diagnostic-score.score-good { color: var(--green); }
+  .diagnostic-score.score-great { color: var(--teal); }
+
+  .diagnostic-label {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .diagnostic-message {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.6;
+    padding: 16px 20px;
+    background: var(--teal-bg);
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+
+  /* CTA */
+  .cta-section { margin-top: 48px; text-align: center; }
+
+  .cta-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .cta-section p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: white;
+    text-decoration: none;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: opacity 0.2s;
+  }
+
+  .cta-button:hover { opacity: 0.9; }
+
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--teal-border);
+    text-align: center;
+  }
+
+  .footer .name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .footer .role {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .footer .disclaimer {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 16px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px 60px; }
+    .header h1 { font-size: 28px; }
+    .hero-stat { flex-direction: column; text-align: center; }
+    .hero-stat .label { text-align: center; }
+    .score-bar { padding: 10px 16px; }
+    .pilar-content { padding: 0 16px 20px; }
+    .status-btn { font-size: 12px; padding: 8px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="score-bar">
+  <span class="label">Tu puntuación</span>
+  <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+  <span class="score-value" id="scoreValue">0/6</span>
+</div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">Caso Real &middot; 6 Meses</div>
+    <h1>Los 6 Pilares GTM</h1>
+    <p class="subtitle">De Excel a pipeline medible.</p>
+    <div class="hero-stat">
+      <span class="number">76%</span>
+      <span class="label">de reuniones terminan en propuesta.<br>Antes no podían ni medirlo.</span>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro">
+    Este es el framework exacto que usamos con un cliente B2B de servicios.
+    Pasaron de <strong>seguimiento en Excel y cero visibilidad</strong> a presentar al board con datos reales.
+    No es teoría. <strong>Es lo que montamos.</strong><br><br>
+    Para cada pilar, selecciona tu estado. Al final verás tu diagnóstico.
+  </div>
+
+  <!-- PILAR 1 -->
+  <div class="pilar open" data-pilar="1">
+    <div class="pilar-header" onclick="togglePilar(this)">
+      <div class="pilar-number">1</div>
+      <div class="pilar-title-block">
+        <div class="pilar-title">CRM Operativo (no decorativo)</div>
+        <div class="pilar-subtitle">Que el equipo lo use cada día, no solo el jefe</div>
+      </div>
+      <div class="pilar-status-indicator" id="indicator-1"></div>
+      <span class="chevron">&#9662;</span>
+    </div>
+    <div class="pilar-body">
+      <div class="pilar-content">
+        <div class="checks">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes ver todos los deals abiertos en menos de 30 segundos</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">El equipo comercial registra actividad sin que nadie se lo pida</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tienes dashboards que alguien revisa semanalmente</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes filtrar por etapa del pipeline y ver cuánto hay en cada una</span>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Señal de alarma</div>
+          <p>Si tus comerciales operan en Excel "porque es más rápido", no tienes CRM. Tienes un gasto mensual.</p>
+        </div>
+        <div class="what-we-did">
+          <div class="what-we-did-title">Lo que hicimos</div>
+          <p>Migramos de Excel a HubSpot. Pero el CRM no fue lo importante &mdash; lo importante fue definir QUÉ datos necesitábamos ANTES de migrar. La mayoría de implementaciones fallan porque empiezan por la herramienta, no por las preguntas que necesitan responder.</p>
+        </div>
+        <div class="status-selector">
+          <button class="status-btn" onclick="setStatus(1, 'red', this)">&#10060; No existe</button>
+          <button class="status-btn" onclick="setStatus(1, 'amber', this)">&#9888;&#65039; No funciona</button>
+          <button class="status-btn" onclick="setStatus(1, 'green', this)">&#9989; Operativo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 2 -->
+  <div class="pilar" data-pilar="2">
+    <div class="pilar-header" onclick="togglePilar(this)">
+      <div class="pilar-number">2</div>
+      <div class="pilar-title-block">
+        <div class="pilar-title">Proceso Comercial Definido</div>
+        <div class="pilar-subtitle">Que el equipo siga de verdad, no un PDF que nadie abre</div>
+      </div>
+      <div class="pilar-status-indicator" id="indicator-2"></div>
+      <span class="chevron">&#9662;</span>
+    </div>
+    <div class="pilar-body">
+      <div class="pilar-content">
+        <div class="checks">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes explicar en 3 frases tu proceso de venta</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Si preguntas a 2 comerciales "cuál es el proceso?", responden lo mismo</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tienes criterios claros para mover un deal de una etapa a otra</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Hay un tiempo máximo definido por etapa antes de escalar o descartar</span>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Señal de alarma</div>
+          <p>Cada comercial tiene "su método". Nadie sabe por qué unos cierran más que otros. No hay forma de replicar lo que funciona.</p>
+        </div>
+        <div class="what-we-did">
+          <div class="what-we-did-title">Lo que hicimos</div>
+          <p>Rediseñamos el proceso con el equipo (no PARA el equipo). Definimos 5 etapas con criterios de entrada y salida. El equipo lo adoptó porque participó en crearlo. Resultado: 76% de reuniones terminan en propuesta porque solo avanzan deals cualificados.</p>
+        </div>
+        <div class="status-selector">
+          <button class="status-btn" onclick="setStatus(2, 'red', this)">&#10060; No existe</button>
+          <button class="status-btn" onclick="setStatus(2, 'amber', this)">&#9888;&#65039; No funciona</button>
+          <button class="status-btn" onclick="setStatus(2, 'green', this)">&#9989; Operativo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 3 -->
+  <div class="pilar" data-pilar="3">
+    <div class="pilar-header" onclick="togglePilar(this)">
+      <div class="pilar-number">3</div>
+      <div class="pilar-title-block">
+        <div class="pilar-title">Contenido con Calendario y Métricas</div>
+        <div class="pilar-subtitle">Publicar con plan, medir qué funciona</div>
+      </div>
+      <div class="pilar-status-indicator" id="indicator-3"></div>
+      <span class="chevron">&#9662;</span>
+    </div>
+    <div class="pilar-body">
+      <div class="pilar-content">
+        <div class="checks">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tienes un calendario de contenido para las próximas 2 semanas</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Sabes cuántas impresiones tuvo tu último post</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes decir qué tipo de contenido genera más engagement</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tu contenido habla del problema del cliente (no de tu producto)</span>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Señal de alarma</div>
+          <p>Publicas cuando te acuerdas. No mides nada. O peor: mides todo pero no cambias nada.</p>
+        </div>
+        <div class="what-we-did">
+          <div class="what-we-did-title">Lo que hicimos</div>
+          <p>Calendario semanal con mix definido (autoridad, educativo, personal). Métricas semanales. De 200 a 1.000+ seguidores en LinkedIn. Lo importante no fueron los seguidores &mdash; fue que el contenido empezó a generar señales de compra que alimentan el outbound.</p>
+        </div>
+        <div class="status-selector">
+          <button class="status-btn" onclick="setStatus(3, 'red', this)">&#10060; No existe</button>
+          <button class="status-btn" onclick="setStatus(3, 'amber', this)">&#9888;&#65039; No funciona</button>
+          <button class="status-btn" onclick="setStatus(3, 'green', this)">&#9989; Operativo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 4 -->
+  <div class="pilar" data-pilar="4">
+    <div class="pilar-header" onclick="togglePilar(this)">
+      <div class="pilar-number">4</div>
+      <div class="pilar-title-block">
+        <div class="pilar-title">Reporting Semanal con Datos Reales</div>
+        <div class="pilar-subtitle">Alguien mira los números y decide con ellos</div>
+      </div>
+      <div class="pilar-status-indicator" id="indicator-4"></div>
+      <span class="chevron">&#9662;</span>
+    </div>
+    <div class="pilar-body">
+      <div class="pilar-content">
+        <div class="checks">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tienes una reunión semanal donde se revisan métricas comerciales</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes decir cuántas reuniones hubo esta semana sin preguntar a nadie</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">El equipo sabe su tasa de conversión por etapa</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes comparar este mes con el anterior en menos de 2 minutos</span>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Señal de alarma</div>
+          <p>La CEO pregunta "cómo vamos?" y nadie puede responder sin mirar tres sitios distintos.</p>
+        </div>
+        <div class="what-we-did">
+          <div class="what-we-did-title">Lo que hicimos</div>
+          <p>Dashboard en HubSpot con 4 métricas clave. Revisión semanal de 20 minutos. La CEO pasó de "no sé cómo vamos" a presentar al board con datos reales y saber dónde invertir más recursos.</p>
+        </div>
+        <div class="status-selector">
+          <button class="status-btn" onclick="setStatus(4, 'red', this)">&#10060; No existe</button>
+          <button class="status-btn" onclick="setStatus(4, 'amber', this)">&#9888;&#65039; No funciona</button>
+          <button class="status-btn" onclick="setStatus(4, 'green', this)">&#9989; Operativo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 5 -->
+  <div class="pilar" data-pilar="5">
+    <div class="pilar-header" onclick="togglePilar(this)">
+      <div class="pilar-number">5</div>
+      <div class="pilar-title-block">
+        <div class="pilar-title">Nurturing de la Base Existente</div>
+        <div class="pilar-subtitle">Hacer algo con los contactos que ya tienes</div>
+      </div>
+      <div class="pilar-status-indicator" id="indicator-5"></div>
+      <span class="chevron">&#9662;</span>
+    </div>
+    <div class="pilar-body">
+      <div class="pilar-content">
+        <div class="checks">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Sabes cuántos contactos en tu CRM no han tenido actividad en 90+ días</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tienes alguna campaña activa para reactivar contactos dormidos</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Diferencias entre contactos fríos, tibios y calientes</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Hay algún flujo automatizado de seguimiento post-reunión</span>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Señal de alarma</div>
+          <p>Tu CRM tiene 5.000 contactos. 4.800 no han recibido un email en meses. Estás sentado sobre una mina de oro que no trabajas.</p>
+        </div>
+        <div class="what-we-did">
+          <div class="what-we-did-title">Lo que hicimos</div>
+          <p>Segmentamos la base por última actividad. Creamos 3 flujos: reactivación (90+ días sin contacto), post-reunión (seguimiento automático), y nurturing de contenido (envío semanal de valor). Resultado: reuniones que salen de contactos que ya teníamos pero nadie trabajaba.</p>
+        </div>
+        <div class="status-selector">
+          <button class="status-btn" onclick="setStatus(5, 'red', this)">&#10060; No existe</button>
+          <button class="status-btn" onclick="setStatus(5, 'amber', this)">&#9888;&#65039; No funciona</button>
+          <button class="status-btn" onclick="setStatus(5, 'green', this)">&#9989; Operativo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 6 -->
+  <div class="pilar" data-pilar="6">
+    <div class="pilar-header" onclick="togglePilar(this)">
+      <div class="pilar-number">6</div>
+      <div class="pilar-title-block">
+        <div class="pilar-title">Capacidad de Forecast</div>
+        <div class="pilar-subtitle">Predecir revenue con datos, no con fe</div>
+      </div>
+      <div class="pilar-status-indicator" id="indicator-6"></div>
+      <span class="chevron">&#9662;</span>
+    </div>
+    <div class="pilar-body">
+      <div class="pilar-content">
+        <div class="checks">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes decir cuánto revenue tienes "casi seguro" para el próximo mes</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Tienes un pipeline ponderado (deals x probabilidad de cierre)</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Sabes cuántas reuniones necesitas para alcanzar tu objetivo de revenue</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="check-box">&#10003;</div>
+            <span class="check-label">Puedes presentar una proyección al board sin inventar números</span>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Señal de alarma</div>
+          <p>Tu forecast es "lo que el director comercial cree que va a pasar". No hay datos que lo respalden. Las sorpresas (buenas y malas) son la norma.</p>
+        </div>
+        <div class="what-we-did">
+          <div class="what-we-did-title">Lo que hicimos</div>
+          <p>Pipeline ponderado en HubSpot. Cada deal tiene probabilidad de cierre basada en la etapa (no en el optimismo del comercial). La CEO ahora puede decir: "tenemos 400K en pipeline, de los cuales X son probables." Y puede decidir dónde poner más recursos.</p>
+        </div>
+        <div class="status-selector">
+          <button class="status-btn" onclick="setStatus(6, 'red', this)">&#10060; No existe</button>
+          <button class="status-btn" onclick="setStatus(6, 'amber', this)">&#9888;&#65039; No funciona</button>
+          <button class="status-btn" onclick="setStatus(6, 'green', this)">&#9989; Operativo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGNOSTIC -->
+  <div class="diagnostic" id="diagnostic" style="display:none;">
+    <h2>Tu Diagnóstico</h2>
+    <div class="diagnostic-score" id="diagScore">0/6</div>
+    <div class="diagnostic-label">pilares operativos</div>
+    <div class="diagnostic-message" id="diagMessage"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Siguiente paso</h2>
+    <p>Si tienes 3+ pilares en rojo o amarillo y quieres saber por dónde empezar, hablemos.</p>
+    <p style="font-size:14px; color:var(--text-dim);">No vendo herramientas. Monto sistemas GTM completos para empresas B2B que necesitan marketing y ventas pero no tienen equipo para hacerlo.</p>
+    <a href="https://www.linkedin.com/in/pabloalbertflorence/" class="cta-button" target="_blank">Mensaje directo en LinkedIn</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="name">Pablo Albert Florence</div>
+    <div class="role">CEO, Deepbound</div>
+    <p class="disclaimer">Basado en un caso real (cliente B2B de servicios, anonimizado). Los resultados (76% conversión reunión a propuesta, 200 a 1.000+ seguidores) corresponden a este cliente. Cada empresa es diferente.</p>
+  </div>
+
+</div>
+
+<script>
+  const statuses = {};
+  const messages = {
+    0: "Estás donde estaba nuestro cliente hace 6 meses. La buena noticia: mira dónde está ahora.",
+    1: "Estás volando a ciegas. El margen de mejora es enorme. Empieza por el pilar que más te duela.",
+    2: "Estás volando a ciegas. El margen de mejora es enorme. Empieza por el pilar que más te duela.",
+    3: "Tienes base. Pero hay huecos que te cuestan pipeline cada semana.",
+    4: "Tienes base. Pero hay huecos que te cuestan pipeline cada semana.",
+    5: "Tienes sistema. El reto ahora es optimizar, no construir.",
+    6: "Tienes sistema. El reto ahora es optimizar, no construir."
+  };
+
+  function togglePilar(header) {
+    header.closest('.pilar').classList.toggle('open');
+  }
+
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+    item.querySelector('.check-box').classList.toggle('checked');
+  }
+
+  function setStatus(pilar, color, btn) {
+    const selector = btn.closest('.status-selector');
+    selector.querySelectorAll('.status-btn').forEach(b => {
+      b.className = 'status-btn';
+    });
+
+    btn.classList.add('active-' + color);
+    statuses[pilar] = color;
+
+    const indicator = document.getElementById('indicator-' + pilar);
+    indicator.className = 'pilar-status-indicator ' + color;
+
+    updateScore();
+  }
+
+  function updateScore() {
+    const total = Object.keys(statuses).length;
+    const greens = Object.values(statuses).filter(s => s === 'green').length;
+
+    // Update top bar
+    const pct = total > 0 ? (greens / 6) * 100 : 0;
+    document.getElementById('scoreFill').style.width = pct + '%';
+    document.getElementById('scoreValue').textContent = greens + '/6';
+
+    // Show diagnostic when all 6 are filled
+    if (total === 6) {
+      const diag = document.getElementById('diagnostic');
+      diag.style.display = 'block';
+      const scoreEl = document.getElementById('diagScore');
+      scoreEl.textContent = greens + '/6';
+      scoreEl.className = 'diagnostic-score ' + (
+        greens <= 2 ? 'score-bad' : greens <= 4 ? 'score-mid' : greens <= 5 ? 'score-good' : 'score-great'
+      );
+      document.getElementById('diagMessage').textContent = messages[greens];
+      diag.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+</script>
+</body>
+</html>
